@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colegio Dental Carrión - Registro de Alumnos</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
@@ -14,327 +16,167 @@
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf5 100%);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 0;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Fondo con patrón de dientes */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><path d="M20 20 Q 30 10, 40 20 L 45 35 Q 35 45, 25 35 L 20 20" fill="%233449e0"/><path d="M60 30 Q 70 20, 80 30 L 85 45 Q 75 55, 65 45 L 60 30" fill="%233449e0"/><path d="M30 60 Q 40 50, 50 60 L 55 75 Q 45 85, 35 75 L 30 60" fill="%233449e0"/><path d="M70 70 Q 80 60, 90 70 L 95 85 Q 85 95, 75 85 L 70 70" fill="%233449e0"/></svg>');
-            background-repeat: repeat;
-            pointer-events: none;
-            z-index: 0;
+            padding: 20px;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 30px 20px;
-            position: relative;
-            z-index: 1;
         }
 
-        /* Header principal */
-        .main-header {
-            background: linear-gradient(135deg, #003366 0%, #1a4d8c 100%);
-            border-radius: 30px 30px 30px 30px;
-            padding: 25px 40px;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 20px 40px rgba(0, 51, 102, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-header::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .clinic-brand {
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             gap: 20px;
-            position: relative;
-            z-index: 1;
         }
 
-        .clinic-logo {
+        .header-icon {
             width: 80px;
             height: 80px;
-            background: white;
-            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 40px;
-            color: #003366;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            border: 3px solid #ffd700;
-        }
-
-        .clinic-info h1 {
             color: white;
+        }
+
+        .header-text h1 {
+            color: #333;
             font-size: 2em;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
-        .clinic-info .subtitle {
-            color: #ffd700;
-            font-size: 1em;
-            font-weight: 500;
-            letter-spacing: 2px;
+        .header-text p {
+            color: #666;
         }
 
-        .clinic-badge {
-            background: rgba(255, 215, 0, 0.2);
-            color: #ffd700;
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-weight: 600;
-            border: 2px solid #ffd700;
-            backdrop-filter: blur(5px);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Tarjetas principales */
+        /* Tarjetas */
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0, 51, 102, 0.15);
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 40px 80px rgba(0, 51, 102, 0.2);
         }
 
         .card-header {
-            background: linear-gradient(135deg, #003366 0%, #1a4d8c 100%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 30px 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-header::after {
-            content: "📚";
-            position: absolute;
-            right: 30px;
-            bottom: -10px;
-            font-size: 80px;
-            opacity: 0.1;
-            transform: rotate(10deg);
+            padding: 20px;
         }
 
         .card-header h2 {
-            font-size: 2em;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .card-header p {
-            opacity: 0.9;
-            font-size: 1.1em;
+            font-size: 1.5em;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .card-content {
-            padding: 40px;
+        .card-body {
+            padding: 25px;
         }
 
         /* Formulario */
         .form-group {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
-        .form-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-            color: #003366;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.3em;
-            color: #003366;
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 18px 25px 18px 60px;
-            border: 2px solid #e0e7ff;
-            border-radius: 50px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
             font-size: 16px;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s;
-            background: white;
+            font-family: 'Poppins', sans-serif;
         }
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #003366;
-            box-shadow: 0 0 0 5px rgba(0, 51, 102, 0.1);
+            border-color: #667eea;
         }
 
         /* Área de firma */
-        .signature-area {
-            background: linear-gradient(145deg, #f8faff, #f0f4ff);
-            border-radius: 40px;
-            padding: 30px;
-            border: 2px solid #003366;
-            position: relative;
-            margin-bottom: 30px;
-        }
-
-        .signature-title {
-            position: absolute;
-            top: -15px;
-            left: 30px;
-            background: #003366;
-            color: white;
-            padding: 8px 25px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 5px 15px rgba(0, 51, 102, 0.3);
-        }
-
-        .signature-pad-container {
-            background: white;
-            border-radius: 30px;
-            padding: 10px;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
-            margin-top: 20px;
-        }
-
         .signature-pad {
             width: 100%;
-            height: 220px;
+            height: 200px;
             background: white;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
             cursor: crosshair;
             touch-action: none;
-            border-radius: 20px;
-            border: 2px dashed #003366;
+        }
+
+        .signature-hint {
+            text-align: center;
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9em;
         }
 
         /* Botones */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
         .btn {
-            padding: 18px 30px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 60px;
-            font-size: 1.1em;
+            border-radius: 10px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #003366 0%, #1a4d8c 100%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            border: 2px solid #ffd700;
-            box-shadow: 0 10px 20px rgba(0, 51, 102, 0.3);
-            width: 100%;
+            flex: 2;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0, 51, 102, 0.4);
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         .btn-secondary {
-            background: white;
-            color: #003366;
-            border: 2px solid #003366;
-            margin-right: 10px;
+            background: #f0f0f0;
+            color: #333;
+            flex: 1;
         }
 
-        .btn-secondary:hover {
-            background: #003366;
-            color: white;
-        }
-
-        .btn-export {
+        .btn-success {
             background: #28a745;
             color: white;
-            border: 2px solid #ffd700;
         }
 
-        .btn-export:hover {
+        .btn-success:hover {
             background: #218838;
         }
 
-        .btn-refresh {
-            background: #17a2b8;
-            color: white;
-            border: 2px solid #ffd700;
-        }
-
-        .btn-refresh:hover {
-            background: #138496;
-        }
-
-        .toolbar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        /* Lista de alumnos */
+        /* Grid de alumnos */
         .students-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -343,668 +185,433 @@
         }
 
         .student-card {
-            background: white;
-            border-radius: 25px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0, 51, 102, 0.08);
-            border: 1px solid #e0e7ff;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .student-card::before {
-            content: "📚";
-            position: absolute;
-            right: -10px;
-            bottom: -10px;
-            font-size: 60px;
-            opacity: 0.03;
-            transform: rotate(15deg);
-        }
-
-        .student-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 35px rgba(0, 51, 102, 0.15);
-            border-color: #003366;
-        }
-
-        .student-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .student-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #003366 0%, #1a4d8c 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #ffd700;
-            font-weight: 700;
-        }
-
-        .student-info {
-            flex: 1;
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
         }
 
         .student-name {
             font-size: 1.2em;
-            font-weight: 700;
-            color: #003366;
-            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
         }
 
         .student-date {
-            font-size: 0.85em;
             color: #666;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .student-signature {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px dashed #e0e7ff;
-            text-align: center;
-        }
-
-        .signature-label {
             font-size: 0.9em;
-            color: #003366;
-            margin-bottom: 10px;
-            font-weight: 600;
+            margin-bottom: 15px;
         }
 
-        .signature-img {
+        .student-signature-img {
             max-width: 100%;
-            max-height: 70px;
-            background: #f8faff;
-            border-radius: 10px;
+            max-height: 50px;
+            background: white;
+            border-radius: 5px;
             padding: 5px;
+            border: 1px solid #667eea;
         }
 
-        .badge-school {
-            background: #ffd700;
-            color: #003366;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.85em;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 15px;
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .badge-supabase {
-            background: #3ecf8e;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7em;
-            margin-left: 10px;
-        }
-
-        /* Mensaje vacío */
+        /* Empty state */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 40px;
-            border: 2px dashed #003366;
+            padding: 40px;
+            color: #666;
         }
 
         .empty-icon {
             font-size: 60px;
+            color: #667eea;
             margin-bottom: 20px;
             opacity: 0.5;
         }
 
-        .empty-title {
-            font-size: 1.5em;
-            color: #003366;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #003366;
-        }
-
-        .spinner {
-            border: 4px solid rgba(0, 51, 102, 0.1);
-            border-left-color: #003366;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         /* Footer */
-        .school-footer {
+        .footer {
             text-align: center;
-            margin-top: 40px;
             padding: 20px;
-            color: #003366;
-            font-weight: 500;
-            background: rgba(255,255,255,0.9);
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-        }
-
-        /* Animaciones */
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .main-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
-            }
-
-            .clinic-brand {
-                flex-direction: column;
-            }
-
-            .toolbar {
-                flex-direction: column;
-            }
-            
-            .toolbar button {
-                width: 100%;
-            }
+            color: white;
         }
     </style>
-    <!-- Librerías necesarias -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Librerías -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <!-- Header Principal -->
-        <div class="main-header">
-            <div class="clinic-brand">
-                <div class="clinic-logo pulse">
-                    🦷
-                </div>
-                <div class="clinic-info">
-                    <h1>COLEGIO DENTAL CARRIÓN</h1>
-                    <div class="subtitle">FORMANDO PROFESIONALES EN SALUD ORAL · LIMA-PERÚ</div>
-                </div>
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-tooth"></i>
             </div>
-            <div class="clinic-badge">
-                <i>📋</i> R.D. N° 0123-2024
+            <div class="header-text">
+                <h1>Colegio Dental Carrión</h1>
+                <p><i class="fas fa-map-marker-alt"></i> Lima - Perú</p>
             </div>
         </div>
 
-        <!-- Tarjeta de Registro -->
+        <!-- Formulario -->
         <div class="card">
             <div class="card-header">
-                <h2>📋 REGISTRO DE ALUMNOS</h2>
-                <p>🦷 Complete sus datos y firme para el control de asistencia</p>
+                <h2><i class="fas fa-pen"></i> Nuevo Registro</h2>
             </div>
-            <div class="card-content">
+            <div class="card-body">
                 <form id="signatureForm">
                     <div class="form-group">
-                        <div class="form-label">
-                            <i>👤</i> NOMBRE COMPLETO DEL ALUMNO
-                        </div>
-                        <div class="input-wrapper">
-                            <span class="input-icon">🦷</span>
-                            <input 
-                                type="text" 
-                                id="fullName" 
-                                name="fullName" 
-                                required 
-                                placeholder="Ej: Juan Pérez García"
-                                autocomplete="off"
-                            >
+                        <label><i class="fas fa-user"></i> Nombre completo</label>
+                        <input type="text" id="fullName" required placeholder="Ej: Juan Pérez García">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-pen-fancy"></i> Firma digital</label>
+                        <canvas id="signaturePad" class="signature-pad"></canvas>
+                        <div class="signature-hint">
+                            <i class="fas fa-mouse"></i> Dibuje su firma aquí
                         </div>
                     </div>
 
-                    <div class="signature-area">
-                        <div class="signature-title">
-                            <span>✍️</span> FIRMA DEL ALUMNO
-                        </div>
-                        
-                        <div class="signature-pad-container">
-                            <canvas id="signaturePad" class="signature-pad"></canvas>
-                        </div>
-
-                        <div style="text-align: center; margin-top: 15px; color: #003366; font-size: 0.9em;">
-                            <i>⏎</i> Dibuje su firma en el recuadro superior
-                        </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="clearBtn">
+                            <i class="fas fa-eraser"></i> Limpiar
+                        </button>
                     </div>
-
-                    <button type="submit" class="btn btn-primary" id="submitBtn">
-                        <span>✓</span> GUARDAR FIRMA EN SUPABASE
-                    </button>
                 </form>
             </div>
         </div>
 
-        <!-- Tarjeta de Alumnos Registrados -->
+        <!-- Lista de alumnos -->
         <div class="card">
-            <div class="card-header" style="background: linear-gradient(135deg, #1a4d8c 0%, #003366 100%);">
-                <h2>📚 ALUMNOS REGISTRADOS EN SUPABASE</h2>
-                <p>🦷 Datos almacenados en la nube</p>
+            <div class="card-header">
+                <h2><i class="fas fa-users"></i> Alumnos Registrados</h2>
             </div>
-            <div class="card-content">
+            <div class="card-body">
                 <div class="toolbar">
                     <button class="btn btn-secondary" id="refreshBtn">
-                        🔄 ACTUALIZAR LISTA
+                        <i class="fas fa-sync-alt"></i> Actualizar
                     </button>
-                    <button class="btn btn-export" id="exportAllPDF">
-                        📄 EXPORTAR A PDF
+                    <button class="btn btn-success" id="exportBtn">
+                        <i class="fas fa-file-pdf"></i> Exportar PDF
                     </button>
                 </div>
                 <div id="studentsList">
-                    <!-- Los registros se mostrarán aquí -->
-                    <div class="loading" id="loadingIndicator">
-                        <div class="spinner"></div>
-                        <p>Cargando datos desde Supabase...</p>
+                    <div class="empty-state">
+                        <i class="fas fa-users empty-icon"></i>
+                        <p>Cargando datos...</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="school-footer">
-            <p>🏫 Colegio Dental Carrión - Av. Brasil 1234, Jesús María, Lima - Perú</p>
-            <p>📞 Central: (01) 612-3456 | 📱 WhatsApp: 987-654-321</p>
-            <p style="font-size: 0.9em; margin-top: 10px;">⚡ Datos almacenados en Supabase (PostgreSQL en la nube)</p>
+        <div class="footer">
+            <i class="fas fa-copyright"></i> 2024 Colegio Dental Carrión
         </div>
     </div>
 
     <script>
-        // ============================================
-        // CONFIGURACIÓN DE SUPABASE
-        // ============================================
-        // IMPORTANTE: Reemplaza con tus credenciales de Supabase
-        const SUPABASE_URL = 'https://uhryalhhypfopsxbfttr.supabase.co'; // Tu URL de Supabase
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVocnlhbGhoeXBmb3BzeGJmdHRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4NjAxMjYsImV4cCI6MjA4NjQzNjEyNn0.QgDfttGQg_iSaiHAd5J9R0YfEh_aaSodo0_DJyZQA1Q'; // Tu Anon Key
-        
-        // Inicializar Supabase
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // ============================================
+    // CONFIGURACIÓN
+    // ============================================
+    const SUPABASE_URL = 'https://uhryalhhypfopsxbfttr.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVocnlhbGhoeXBmb3BzeGJmdHRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4NjAxMjYsImV4cCI6MjA4NjQzNjEyNn0.QgDfttGQg_iSaiHAd5J9R0YfEh_aaSodo0_DJyZQA1Q';
+    
+    // Crear cliente (con nombre diferente para evitar conflicto)
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ============================================
-        // CONFIGURACIÓN DEL CANVAS PARA FIRMA
-        // ============================================
-        const canvas = document.getElementById('signaturePad');
-        const ctx = canvas.getContext('2d');
-        let drawing = false;
-        let lastX = 0;
-        let lastY = 0;
+    // ============================================
+    // CANVAS
+    // ============================================
+    const canvas = document.getElementById('signaturePad');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let lastX = 0;
+    let lastY = 0;
 
-        // Ajustar tamaño del canvas
-        function resizeCanvas() {
-            const container = canvas.parentElement;
-            canvas.width = container.offsetWidth - 20;
-            canvas.height = 200;
+    function resizeCanvas() {
+        const container = canvas.parentElement;
+        canvas.width = container.offsetWidth;
+        canvas.height = 200;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    ctx.strokeStyle = '#667eea';
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    function startDrawing(e) {
+        e.preventDefault();
+        drawing = true;
+        const pos = getCoordinates(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+    }
+
+    function draw(e) {
+        e.preventDefault();
+        if (!drawing) return;
+        const pos = getCoordinates(e);
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+    }
+
+    function stopDrawing() {
+        drawing = false;
+    }
+
+    function getCoordinates(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        let clientX, clientY;
+        if (e.touches) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
         }
+        return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY
+        };
+    }
 
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+    canvas.addEventListener('touchstart', startDrawing);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', stopDrawing);
 
-        // Configurar el estilo del dibujo
-        ctx.strokeStyle = '#003366';
-        ctx.lineWidth = 2.5;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-
-        // Funciones de dibujo
-        function startDrawing(e) {
-            e.preventDefault();
-            drawing = true;
-            const pos = getCoordinates(e);
-            lastX = pos.x;
-            lastY = pos.y;
-            
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-        }
-
-        function draw(e) {
-            e.preventDefault();
-            if (!drawing) return;
-
-            const pos = getCoordinates(e);
-            
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(pos.x, pos.y);
-            ctx.stroke();
-
-            lastX = pos.x;
-            lastY = pos.y;
-        }
-
-        function stopDrawing() {
-            drawing = false;
-        }
-
-        function getCoordinates(e) {
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-
-            let clientX, clientY;
-
-            if (e.touches) {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-            } else {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            }
-
-            return {
-                x: (clientX - rect.left) * scaleX,
-                y: (clientY - rect.top) * scaleY
-            };
-        }
-
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        // Event listeners para el canvas
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseout', stopDrawing);
-        canvas.addEventListener('touchstart', startDrawing);
-        canvas.addEventListener('touchmove', draw);
-        canvas.addEventListener('touchend', stopDrawing);
-
-        // ============================================
-        // FUNCIONES DE SUPABASE
-        // ============================================
-        
-        // Función para cargar alumnos desde Supabase
-        async function loadStudents() {
-            try {
-                document.getElementById('loadingIndicator').style.display = 'block';
-                
-                const { data, error } = await supabase
-                    .from('alumnos')
-                    .select('*')
-                    .order('fecha_registro', { ascending: false });
-                
-                if (error) throw error;
-                
-                displayStudents(data || []);
-            } catch (error) {
-                console.error('Error al cargar alumnos:', error);
-                alert('Error al cargar los datos: ' + error.message);
-                displayStudents([]);
-            } finally {
-                document.getElementById('loadingIndicator').style.display = 'none';
-            }
-        }
-
-        // Función para guardar alumno en Supabase
-        async function saveStudent(name, signatureData) {
-            try {
-                const { data, error } = await supabase
-                    .from('alumnos')
-                    .insert([
-                        { 
-                            nombre_completo: name.toUpperCase(),
-                            firma_data: signatureData,
-                            fecha_registro: new Date().toISOString()
-                        }
-                    ])
-                    .select();
-                
-                if (error) throw error;
-                
-                return { success: true, data };
-            } catch (error) {
-                console.error('Error al guardar:', error);
-                return { success: false, error: error.message };
-            }
-        }
-
-        // Función para mostrar alumnos
-        function displayStudents(students) {
-            const container = document.getElementById('studentsList');
-
-            if (students.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">📚</div>
-                        <div class="empty-title">No hay alumnos registrados</div>
-                        <div style="color: #666;">Complete el formulario superior para registrar al primer alumno</div>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = `
-                <div class="students-grid">
-                    ${students.map(student => {
-                        // Formatear fecha
-                        const fecha = new Date(student.fecha_registro);
-                        const fechaFormateada = fecha.toLocaleString('es-PE', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: true
-                        });
-                        
-                        return `
-                        <div class="student-card">
-                            <div class="student-header">
-                                <div class="student-avatar">
-                                    ${student.nombre_completo.charAt(0)}
-                                </div>
-                                <div class="student-info">
-                                    <div class="student-name">${student.nombre_completo}</div>
-                                    <div class="student-date">
-                                        <span>📅</span> ${fechaFormateada}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="student-signature">
-                                <div class="signature-label">Firma del alumno:</div>
-                                <img src="${student.firma_data}" alt="Firma" class="signature-img">
-                            </div>
-                            <div class="badge-school">
-                                🦷 ID: ${student.id} <span class="badge-supabase">Supabase</span>
-                            </div>
-                        </div>
-                    `}).join('')}
-                </div>
-            `;
-        }
-
-        // ============================================
-        // MANEJADORES DE EVENTOS
-        // ============================================
-
-        // Manejar envío del formulario
-        document.getElementById('signatureForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const fullName = document.getElementById('fullName').value.trim();
-            
-            if (!fullName) {
-                alert('Por favor, escriba el nombre completo del alumno');
-                return;
-            }
-
-            // Verificar si hay algo dibujado
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const pixels = imageData.data;
-            let hasDrawing = false;
-            
-            for (let i = 0; i < pixels.length; i += 4) {
-                if (pixels[i] < 255 || pixels[i+1] < 255 || pixels[i+2] < 255) {
-                    hasDrawing = true;
-                    break;
-                }
-            }
-
-            if (!hasDrawing) {
-                alert('Por favor, dibuje su firma en el recuadro');
-                return;
-            }
-
-            // Deshabilitar botón mientras se guarda
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '⏳ GUARDANDO EN SUPABASE...';
-
-            // Convertir firma a imagen
-            const signatureData = canvas.toDataURL('image/png');
-
-            // Guardar en Supabase
-            const result = await saveStudent(fullName, signatureData);
-
-            if (result.success) {
-                // Limpiar formulario
-                document.getElementById('fullName').value = '';
-                clearCanvas();
-                
-                // Recargar lista
-                await loadStudents();
-                
-                // Mensaje de éxito
-                alert('✅ Firma guardada exitosamente en Supabase');
-            } else {
-                alert('❌ Error al guardar: ' + result.error);
-            }
-
-            // Rehabilitar botón
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '✓ GUARDAR FIRMA EN SUPABASE';
-        });
-
-        // Botón de actualizar
-        document.getElementById('refreshBtn').addEventListener('click', loadStudents);
-
-        // Función para exportar a PDF
-        async function exportToPDF() {
-            const { data: students, error } = await supabase
+    // ============================================
+    // SUPABASE FUNCTIONS
+    // ============================================
+    async function loadStudents() {
+        try {
+            const { data, error } = await supabaseClient
                 .from('alumnos')
                 .select('*')
                 .order('fecha_registro', { ascending: false });
             
-            if (error) {
-                alert('Error al cargar datos: ' + error.message);
-                return;
-            }
+            if (error) throw error;
+            displayStudents(data || []);
+        } catch (error) {
+            console.error('Error:', error);
+            displayStudents([]);
+        }
+    }
 
-            if (students.length === 0) {
-                alert('No hay alumnos registrados para exportar');
-                return;
-            }
+    function displayStudents(students) {
+        const container = document.getElementById('studentsList');
+        
+        if (!students || students.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-users empty-icon"></i>
+                    <p>No hay alumnos registrados</p>
+                </div>
+            `;
+            return;
+        }
 
-            // Crear nuevo PDF
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('p', 'mm', 'a4');
+        let html = '<div class="students-grid">';
+        students.forEach(s => {
+            const fecha = new Date(s.fecha_registro).toLocaleString('es-PE');
+            html += `
+                <div class="student-card">
+                    <div class="student-name">👤 ${s.nombre_completo}</div>
+                    <div class="student-date">📅 ${fecha}</div>
+                    <img src="${s.firma_data}" class="student-signature-img">
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    }
+
+    async function saveStudent(name, signature) {
+        try {
+            const { error } = await supabaseClient
+                .from('alumnos')
+                .insert([{
+                    nombre_completo: name.toUpperCase(),
+                    firma_data: signature,
+                    fecha_registro: new Date().toISOString()
+                }]);
             
-            // Título del documento
+            if (error) throw error;
+            return true;
+        } catch (error) {
+            console.error('Error:', error);
+            return false;
+        }
+    }
+
+    // ============================================
+    // EXPORTAR PDF
+    // ============================================
+    async function exportToPDF() {
+        try {
+            const { data: students, error } = await supabaseClient
+                .from('alumnos')
+                .select('*')
+                .order('fecha_registro', { ascending: false });
+            
+            if (error) throw error;
+            if (students.length === 0) {
+                alert('No hay alumnos');
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            
+            // Título
             pdf.setFontSize(20);
             pdf.setTextColor(0, 51, 102);
             pdf.text('COLEGIO DENTAL CARRIÓN', 105, 20, { align: 'center' });
             
-            pdf.setFontSize(16);
-            pdf.setTextColor(0, 0, 0);
-            pdf.text('REGISTRO DE ALUMNOS - FIRMAS DIGITALES', 105, 30, { align: 'center' });
+            pdf.setFontSize(12);
+            pdf.setTextColor(100, 100, 100);
+            pdf.text('Registro de Alumnos', 105, 30, { align: 'center' });
             
+            // Fecha
+            const fecha = new Date().toLocaleDateString('es-PE');
             pdf.setFontSize(10);
-            pdf.text(`Fecha de exportación: ${new Date().toLocaleDateString('es-PE')}`, 105, 38, { align: 'center' });
+            pdf.text(`Exportado: ${fecha}`, 105, 38, { align: 'center' });
             
-            pdf.line(20, 42, 190, 42);
-
-            let yPosition = 50;
-            const lineHeight = 7;
-
-            for (let i = 0; i < students.length; i++) {
-                const student = students[i];
-                
-                if (yPosition > 250) {
+            // Línea
+            pdf.setDrawColor(102, 126, 234);
+            pdf.line(20, 45, 190, 45);
+            
+            let y = 55;
+            
+            // Alumnos
+            students.forEach((s, i) => {
+                if (y > 270) {
                     pdf.addPage();
-                    yPosition = 20;
+                    y = 30;
                 }
-
-                // Número de registro
+                
+                // Número y nombre
                 pdf.setFontSize(11);
-                pdf.setTextColor(0, 51, 102);
-                pdf.text(`${i + 1}. ALUMNO: ${student.nombre_completo}`, 20, yPosition);
+                pdf.setTextColor(0, 0, 0);
+                pdf.text(`${i+1}. ${s.nombre_completo}`, 20, y);
+                
+                y += 6;
                 
                 // Fecha
-                const fecha = new Date(student.fecha_registro).toLocaleString('es-PE');
+                const fechaReg = new Date(s.fecha_registro).toLocaleString('es-PE');
                 pdf.setFontSize(9);
                 pdf.setTextColor(100, 100, 100);
-                pdf.text(`Fecha de registro: ${fecha}`, 20, yPosition + 5);
+                pdf.text(`Fecha: ${fechaReg}`, 25, y);
                 
-                // Agregar firma como imagen
+                y += 5;
+                
+                // Firma
+                pdf.setFontSize(9);
+                pdf.setTextColor(102, 126, 234);
+                pdf.text('Firma:', 25, y);
+                
                 try {
-                    pdf.addImage(student.firma_data, 'PNG', 20, yPosition + 8, 50, 15);
-                } catch (error) {
-                    console.error('Error al agregar firma:', error);
+                    pdf.addImage(s.firma_data, 'PNG', 40, y-4, 50, 8);
+                } catch (e) {
+                    // Si no se puede agregar la imagen, continuar
                 }
                 
-                pdf.line(20, yPosition + 28, 190, yPosition + 28);
+                y += 15;
                 
-                yPosition += 35;
-            }
+                // Línea separadora
+                pdf.setDrawColor(220, 220, 220);
+                pdf.line(20, y-3, 190, y-3);
+            });
+            
+            pdf.save('alumnos.pdf');
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al generar PDF');
+        }
+    }
 
-            // Pie de página
-            const totalPages = pdf.internal.getNumberOfPages();
-            for (let i = 1; i <= totalPages; i++) {
-                pdf.setPage(i);
-                pdf.setFontSize(8);
-                pdf.setTextColor(150, 150, 150);
-                pdf.text(`Página ${i} de ${totalPages} - Datos de Supabase - Colegio Dental Carrión`, 105, 285, { align: 'center' });
-            }
+    // ============================================
+    // EVENTOS
+    // ============================================
+    document.addEventListener('DOMContentLoaded', () => {
+        loadStudents();
+    });
 
-            pdf.save(`alumnos_carrion_${new Date().toISOString().split('T')[0]}.pdf`);
+    document.getElementById('clearBtn').addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    document.getElementById('refreshBtn').addEventListener('click', loadStudents);
+    document.getElementById('exportBtn').addEventListener('click', exportToPDF);
+
+    document.getElementById('signatureForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('fullName').value.trim();
+        if (!name) {
+            alert('Escriba el nombre');
+            return;
         }
 
-        // Exportar a PDF
-        document.getElementById('exportAllPDF').addEventListener('click', exportToPDF);
-
-        // Cargar alumnos al iniciar
-        loadStudents();
-
-        // Verificar conexión a Supabase
-        (async function checkConnection() {
-            try {
-                const { error } = await supabase.from('alumnos').select('count', { count: 'exact', head: true });
-                if (error) throw error;
-                console.log('✅ Conectado a Supabase correctamente');
-            } catch (error) {
-                console.error('❌ Error de conexión a Supabase:', error);
-                alert('Error de conexión a Supabase. Verifica tus credenciales.');
+        // Verificar firma
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const pixels = imageData.data;
+        let hasDrawing = false;
+        for (let i = 0; i < pixels.length; i += 4) {
+            if (pixels[i] < 255) {
+                hasDrawing = true;
+                break;
             }
-        })();
-    </script>
+        }
+
+        if (!hasDrawing) {
+            alert('Dibuje su firma');
+            return;
+        }
+
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+
+        const signature = canvas.toDataURL('image/png');
+        const success = await saveStudent(name, signature);
+
+        if (success) {
+            document.getElementById('fullName').value = '';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            await loadStudents();
+            alert('✅ Guardado');
+        } else {
+            alert('❌ Error al guardar');
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
+    });
+</script>
 </body>
 </html>
