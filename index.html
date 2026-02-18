@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intituto Carrión - Solicitud de Firmas Para Presenciales del Curso</title>
+    <title>Instituto Carrión - Solicitud de Firmas Para Presenciales del Curso</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -253,7 +253,8 @@
                 <i class="fas fa-tooth"></i>
             </div>
             <div class="header-text">
-                <h1>Intitución Carrión - Solicitud de Firmas Para Presenciales del Curso</h1>
+                <h1>Instituto Carrión</h1>
+                <h1>Solicitud de Firmas Para Presenciales del Curso</h1>
                 <p><i class="fas fa-map-marker-alt"></i> Lima - Perú</p>
             </div>
         </div>
@@ -487,14 +488,14 @@
             const pdf = new jsPDF();
             
             // Título
-            pdf.setFontSize(20);
+            pdf.setFontSize(18);
             pdf.setTextColor(0, 51, 102);
-            pdf.text('Intituto Carrión', 105, 20, { align: 'center' });
-            pdf.text('Solicitud de Firmas Para Presenciales del Curso', 105, 20, { align: 'center' });
+            pdf.text('Instituto Carrión', 105, 20, { align: 'center' });
+            pdf.text('Solicitud de Firmas Para Presenciales del Curso', 105, 30, { align: 'center' });
             
             pdf.setFontSize(12);
             pdf.setTextColor(100, 100, 100);
-            pdf.text('Registro de Alumnos', 105, 30, { align: 'center' });
+            pdf.text('Registro de Alumnos', 105, 40, { align: 'center' });
             
             // Fecha
             const fecha = new Date().toLocaleDateString('es-PE');
