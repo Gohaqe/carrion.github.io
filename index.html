@@ -495,12 +495,12 @@
             
             pdf.setFontSize(12);
             pdf.setTextColor(100, 100, 100);
-            pdf.text('Registro de Alumnos', 105, 34, { align: 'center' });
+            pdf.text('Registro de Alumnos', 105, 36, { align: 'center' });
             
             // Fecha
             const fecha = new Date().toLocaleDateString('es-PE');
             pdf.setFontSize(10);
-            pdf.text(`Exportado: ${fecha}`, 105, 38, { align: 'center' });
+            pdf.text(`Exportado: ${fecha}`, 105, 40, { align: 'center' });
             
             // Línea
             pdf.setDrawColor(102, 126, 234);
