@@ -13,9 +13,10 @@
             box-sizing: border-box;
         }
 
+        /* Colores institucionales Carrión: Azul Marino (#003366) y Azul Claro (#007bff) */
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #003366 0%, #007bff 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -40,7 +41,7 @@
         .header-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #003366, #007bff);
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -51,9 +52,10 @@
         }
 
         .header-text h1 {
-            color: #333;
+            color: #003366;
             font-size: 2em;
             line-height: 1.2;
+            font-weight: 700;
         }
 
         .header-text h2 {
@@ -78,7 +80,7 @@
         }
 
         .card-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #003366, #007bff);
             color: white;
             padding: 20px;
         }
@@ -103,7 +105,7 @@
             display: block;
             margin-bottom: 8px;
             color: #333;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         input[type="text"] {
@@ -118,15 +120,15 @@
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #007bff;
         }
 
-        /* Área de firma */
+        /* Área de firma (Doble de alto: 400px) */
         .signature-pad {
             width: 100%;
-            height: 200px;
+            height: 400px; 
             background: #fafafa;
-            border: 2px dashed #667eea;
+            border: 2px dashed #003366;
             border-radius: 10px;
             cursor: crosshair;
             touch-action: none;
@@ -171,7 +173,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #003366, #007bff);
             color: white;
             flex: 2;
         }
@@ -225,7 +227,7 @@
         .student-name {
             font-size: 1.2em;
             font-weight: 600;
-            color: #333;
+            color: #003366;
             margin-bottom: 10px;
             word-break: break-word;
         }
@@ -238,11 +240,11 @@
 
         .student-signature-img {
             max-width: 100%;
-            max-height: 50px;
+            max-height: 80px;
             background: white;
             border-radius: 5px;
             padding: 5px;
-            border: 1px solid #667eea;
+            border: 1px solid #003366;
         }
 
         /* Toolbar */
@@ -262,7 +264,7 @@
 
         .empty-icon {
             font-size: 60px;
-            color: #667eea;
+            color: #007bff;
             margin-bottom: 20px;
             opacity: 0.5;
         }
@@ -282,6 +284,9 @@
             }
             .btn-group {
                 flex-direction: column;
+            }
+            .signature-pad {
+                height: 300px; /* Un poco más pequeño en móviles para no ocupar toda la pantalla */
             }
         }
     </style>
@@ -316,7 +321,7 @@
                         <label><i class="fas fa-pen-fancy"></i> Firma digital</label>
                         <canvas id="signaturePad" class="signature-pad"></canvas>
                         <div class="signature-hint">
-                            <i class="fas fa-mouse"></i> Dibuje su firma aquí
+                            <i class="fas fa-mouse"></i> Dibuje su firma aquí (Trazo en color azul)
                         </div>
                     </div>
 
@@ -380,12 +385,13 @@
 
     function resizeCanvas() {
         const container = canvas.parentElement;
-        // Solo redimensionar el ancho para no borrar contenido accidentalmente si no es necesario
         canvas.width = container.offsetWidth;
-        canvas.height = 200;
         
-        // Re-aplicar estilos tras el resize
-        ctx.strokeStyle = '#667eea';
+        // Ajuste de altura a 400px (o 300px en móviles mediante CSS si se adapta la lógica, aquí forzamos según el tamaño de la pantalla)
+        canvas.height = window.innerWidth <= 768 ? 300 : 400;
+        
+        // Configuración del lápiz: Color Azul Oscuro institucional
+        ctx.strokeStyle = '#003366';
         ctx.lineWidth = 3;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -531,10 +537,10 @@
             
             // Título
             pdf.setFontSize(18);
-            pdf.setTextColor(0, 51, 102);
+            pdf.setTextColor(0, 51, 102); // Color Azul Marino para PDF
             pdf.text('Instituto Carrión', 105, 20, { align: 'center' });
             
-            // Subtítulo adaptado para mayor longitud
+            // Subtítulo
             pdf.setFontSize(14);
             pdf.text('Solicitud de Firmas Para Cambio de Horario de Campaña', 105, 30, { align: 'center' });
             
@@ -548,7 +554,7 @@
             pdf.text(`Exportado: ${fecha}`, 105, 44, { align: 'center' });
             
             // Línea
-            pdf.setDrawColor(102, 126, 234);
+            pdf.setDrawColor(0, 123, 255); // Color Azul Claro
             pdf.line(20, 48, 190, 48);
             
             let y = 58;
@@ -577,16 +583,17 @@
                 
                 // Firma
                 pdf.setFontSize(9);
-                pdf.setTextColor(102, 126, 234);
+                pdf.setTextColor(0, 51, 102);
                 pdf.text('Firma:', 25, y);
                 
                 try {
-                    pdf.addImage(s.firma_data, 'PNG', 40, y-4, 50, 8);
+                    // La firma en el canvas ahora es azul oscuro por defecto
+                    pdf.addImage(s.firma_data, 'PNG', 40, y-4, 50, 20); // Altura de imagen ajustada en el PDF
                 } catch (e) {
                     console.warn('No se pudo añadir la imagen al PDF', e);
                 }
                 
-                y += 15;
+                y += 25; // Más espacio por si la firma es más alta
                 
                 // Línea separadora
                 pdf.setDrawColor(220, 220, 220);
@@ -624,13 +631,12 @@
             return;
         }
 
-        // Verificar firma evaluando el canal Alpha (transparencia) en lugar de color
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const pixels = imageData.data;
         let hasDrawing = false;
         
         for (let i = 0; i < pixels.length; i += 4) {
-            if (pixels[i + 3] > 0) { // Si el alpha es mayor a 0, hay píxeles dibujados
+            if (pixels[i + 3] > 0) {
                 hasDrawing = true;
                 break;
             }
