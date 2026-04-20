@@ -108,11 +108,9 @@
         /* Glassmorphic Cards */
         .glass-card {
             background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(0px);
             border-radius: 28px;
             box-shadow: 0 20px 35px -12px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.02);
             border: 1px solid rgba(255,255,255,0.5);
-            transition: all 0.2s ease;
             overflow: hidden;
         }
 
@@ -391,6 +389,15 @@
             cursor: not-allowed;
             transform: none !important;
         }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -422,6 +429,7 @@
                 <i class="fas fa-shield-alt" style="color:#a0b4d7;"></i>
             </div>
             <div class="card-body-modern">
+                <div id="formError" class="error-message" style="display: none;"></div>
                 <form id="signatureForm">
                     <div class="input-group">
                         <label class="input-label"><i class="fas fa-user-graduate"></i> NOMBRE COMPLETO</label>
@@ -461,7 +469,7 @@
                 </div>
                 <div id="studentsList">
                     <div class="empty-state-premium">
-                        <i class="fas fa-file-signature" style="font-size: 48px; color:#cbd5e1; margin-bottom: 16px; display:block;"></i>
+                        <i class="fas fa-spinner fa-pulse" style="font-size: 48px; color:#cbd5e1; margin-bottom: 16px; display:block;"></i>
                         <p style="color:#5b6e8c;">Cargando lista de participantes...</p>
                     </div>
                 </div>
@@ -479,45 +487,60 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVocnlhbGhoeXBmb3BzeGJmdHRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4NjAxMjYsImV4cCI6MjA4NjQzNjEyNn0.QgDfttGQg_iSaiHAd5J9R0YfEh_aaSodo0_DJyZQA1Q';
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ========== CANVAS FIRMA PROFESIONAL ==========
+    // ========== CANVAS FIRMA CORREGIDO ==========
     const canvas = document.getElementById('signaturePad');
     let ctx = canvas.getContext('2d');
     let drawing = false;
     let lastX = 0, lastY = 0;
+    let canvasInitialized = false;
 
-    function resizeCanvasPro() {
+    function initCanvas() {
+        // Obtener el ancho real del contenedor
         const container = canvas.parentElement;
-        const containerWidth = container.clientWidth - 4; // margen interno
+        const containerWidth = container.clientWidth - 4;
         canvas.width = containerWidth;
         canvas.height = 210;
-        // restaurar estilo después del resize
-        if (ctx) {
-            ctx.strokeStyle = '#1e2b6e';
-            ctx.lineWidth = 2.5;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-    }
-    window.addEventListener('resize', () => resizeCanvasPro());
-    resizeCanvasPro();
-
-    function initCanvasContext() {
+        
+        // Configurar el contexto
+        ctx = canvas.getContext('2d');
         ctx.strokeStyle = '#1e2b6e';
         ctx.lineWidth = 2.5;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
+        
+        // Fondo blanco
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        canvasInitialized = true;
     }
-    initCanvasContext();
+
+    // Inicializar el canvas
+    initCanvas();
+    
+    // Redimensionar solo cuando sea necesario
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            // Guardar el contenido actual antes de redimensionar
+            const oldData = canvas.toDataURL();
+            initCanvas();
+            // Restaurar la firma si existía
+            const img = new Image();
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+            img.src = oldData;
+        }, 250);
+    });
 
     function getCanvasCoords(e) {
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
         let clientX, clientY;
+        
         if (e.touches) {
             clientX = e.touches[0].clientX;
             clientY = e.touches[0].clientY;
@@ -525,6 +548,7 @@
             clientX = e.clientX;
             clientY = e.clientY;
         }
+        
         let x = (clientX - rect.left) * scaleX;
         let y = (clientY - rect.top) * scaleY;
         x = Math.min(Math.max(0, x), canvas.width);
@@ -569,7 +593,8 @@
 
     document.getElementById('clearBtn').addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        initCanvasContext();
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     });
 
     // ========== FUNCIONES CRUD ==========
@@ -579,13 +604,26 @@
                 .from('alumnos')
                 .select('*')
                 .order('fecha_registro', { ascending: false });
-            if (error) throw error;
+            
+            if (error) {
+                console.error('Error loading students:', error);
+                throw error;
+            }
+            
+            console.log('Alumnos cargados:', data?.length || 0);
             renderStudentCards(data || []);
             document.getElementById('counterBadge').innerText = data?.length || 0;
         } catch (err) {
-            console.error(err);
+            console.error('Error en loadAlumnos:', err);
             renderStudentCards([]);
             document.getElementById('counterBadge').innerText = '0';
+            const studentsList = document.getElementById('studentsList');
+            studentsList.innerHTML = `
+                <div class="empty-state-premium">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; color:#dc2626; margin-bottom: 16px; display:block;"></i>
+                    <p style="color:#5b6e8c;">Error al cargar los datos</p>
+                    <p style="font-size:12px; margin-top:8px;">${err.message}</p>
+                </div>`;
         }
     }
 
@@ -600,10 +638,17 @@
                 </div>`;
             return;
         }
+        
         let html = `<div class="students-grid-premium">`;
         students.forEach(alumno => {
             const fechaObj = new Date(alumno.fecha_registro);
-            const fechaFormateada = fechaObj.toLocaleString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit' });
+            const fechaFormateada = fechaObj.toLocaleString('es-PE', { 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
             html += `
                 <div class="student-card-premium">
                     <div class="student-name-premium">
@@ -614,7 +659,7 @@
                     </div>
                     <div class="signature-preview">
                         <span class="badge-firma"><i class="fas fa-pen"></i> Firma adjunta</span>
-                        <img src="${alumno.firma_data}" alt="firma" style="max-height:42px; max-width:140px;">
+                        <img src="${alumno.firma_data}" alt="firma" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%2230%22%3E%3Ctext x=%225%22 y=%2220%22 fill=%22%23999%22%3EFirma no disponible%3C/text%3E%3C/svg%3E'">
                     </div>
                 </div>
             `;
@@ -635,17 +680,24 @@
 
     async function saveStudentToSupabase(name, signatureDataURL) {
         try {
-            const { error } = await supabase
+            const { data, error } = await supabase
                 .from('alumnos')
                 .insert([{
                     nombre_completo: name.toUpperCase().trim(),
                     firma_data: signatureDataURL,
                     fecha_registro: new Date().toISOString()
-                }]);
-            if (error) throw error;
+                }])
+                .select();
+            
+            if (error) {
+                console.error('Supabase insert error:', error);
+                throw error;
+            }
+            
+            console.log('Guardado exitoso:', data);
             return true;
         } catch (err) {
-            console.error('Supabase insert error:', err);
+            console.error('Error en saveStudentToSupabase:', err);
             return false;
         }
     }
@@ -653,24 +705,30 @@
     function isCanvasBlank() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
+        // Verificar si hay algún trazo (píxel no blanco)
         for (let i = 0; i < data.length; i += 4) {
-            if (data[i] < 250 || data[i+1] < 250 || data[i+2] < 250) return false;
+            // Si el píxel no es completamente blanco (255,255,255)
+            if (data[i] < 250 || data[i+1] < 250 || data[i+2] < 250) {
+                return false;
+            }
         }
         return true;
     }
 
-    // ========== PDF EXPORT MEJORADO ==========
+    // ========== PDF EXPORT ==========
     async function exportPremiumPDF() {
         try {
             const { data: students, error } = await supabase
                 .from('alumnos')
                 .select('*')
                 .order('fecha_registro', { ascending: false });
+            
             if (error) throw error;
             if (!students || students.length === 0) {
                 alert('No hay registros para exportar.');
                 return;
             }
+            
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
             
@@ -724,7 +782,9 @@
                     } else {
                         pdf.text('(firma no disponible)', 45, y);
                     }
-                } catch (e) { pdf.text('(error al cargar firma)', 45, y); }
+                } catch (e) { 
+                    pdf.text('(error al cargar firma)', 45, y); 
+                }
                 y += 14;
                 pdf.setDrawColor(220, 225, 240);
                 pdf.line(20, y-2, 190, y-2);
@@ -732,22 +792,25 @@
             pdf.save(`Firmas_Instituto_Carrion_${new Date().toISOString().slice(0,19)}.pdf`);
         } catch (err) {
             console.error(err);
-            alert('Error al generar el PDF profesional');
+            alert('Error al generar el PDF: ' + err.message);
         }
     }
 
     // ========== EVENTOS PRINCIPALES ==========
     document.getElementById('signatureForm').addEventListener('submit', async (e) => {
         e.preventDefault();
+        
         const fullName = document.getElementById('fullName').value.trim();
         if (!fullName) {
             alert('Por favor, ingrese el nombre completo del alumno.');
             return;
         }
+        
         if (isCanvasBlank()) {
             alert('Debe dibujar la firma en el área designada.');
             return;
         }
+        
         const submitBtn = document.getElementById('submitBtn');
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="loading-spinner"></span> Guardando...';
@@ -758,12 +821,14 @@
         if (success) {
             document.getElementById('fullName').value = '';
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            initCanvasContext();
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             await loadAlumnos();
             alert('✓ Firma registrada correctamente');
         } else {
             alert('✗ Error al guardar. Verifique la conexión con Supabase o permisos de la tabla.');
         }
+        
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-save"></i> Guardar firma';
     });
